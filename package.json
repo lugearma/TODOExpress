@@ -1,0 +1,10 @@
+{
+  "name": "todo-express",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.10.4",
+    "jade": "^1.8.1",
+    "less-middleware": "^1.0.4",
+    "mongoose": "^3.8.20"
+  }
+}
