@@ -1,1 +1,21 @@
-tasks_completed.jade
+doctype html
+html
+	head
+		title= title + ' | ' + appname
+		link(rel="stylesheet", href="/css/style.css")
+		link(rel="stylesheet", href="css/bootstrap.css")
+		link(rel="stylesheet", href="/css/main.css")
+	body
+		.container
+			.navbar.navbar-default
+				.container
+					.navbar-header
+						a.navbar-brand(href='/')= appname
+			.alert.alert-dismissable
+			h1= title
+			p Welcome to Express.js Todo app;
+				a(href='http://twitter.com') Twitter
+				|. Please enjoy
+			block content
+		script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js' type="text/javascript")
+		script(src='/javascript/main.js' type="text/javascript")

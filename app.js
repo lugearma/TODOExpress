@@ -80,6 +80,13 @@ app.param('task_id', function (req, res, nex, taskId){
 });
 
 //Rutas de otros archivos
+app.get('/', routes.index);
+app.get('/task', tasks.list);
+// app.post('/task', routes.markAllCompleted);
+app.post('/task', tasks.add);
+// app.post('/', routes.markCompleted);
+// app.del('/task/:task_id', tasks.del);
+// app.get('/task/completed', tasks.completed);
 
 
 app.all('*', function (req, res){

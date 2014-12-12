@@ -1,13 +1,14 @@
 exports.list = function (req, res, next){
-
-	req.db.tasks.find({
+	
+	req.db.task.find({
 		completed : false
 	}).toArray(function (err, task){
 		if(err) return next(err);
 		if(!task) return next(new Error('La tarea no existe'));
 
 		//So todo sale bien las pintamos
-		res.render('tasks', {
+		debugger;
+		res.render('tasks.jade', {
 			title : 'Todo list',
 			tasks : task || []
 		});
@@ -29,7 +30,7 @@ exports.add = function (req, res, next){
 
 		//Si todo salio bien
 		console.info('Se agrego %s con el ID: %s', task.name, task._id);
-		res.redirect('/tasks');
+		res.redirect('/task');
 	});
 };
 
