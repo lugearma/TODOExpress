@@ -2,7 +2,8 @@ var express =  require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var routes = require('./routes');
-var task = require('./routes/tasks');
+var tasks = require('./routes/tasks');
+var index = require('./routes/index');
 var morgan = require('morgan');
 var consolidate = require('consolidate');
 var session = require('express-session');
@@ -10,13 +11,14 @@ var lessMiddleware = require('less-middleware');
 var errorhandler = require('errorhandler');
 var http = require('http');
 var path = require('path');
+var jade = require('jade');
 
 var mongoskin = require('mongoskin');
 
 //Creamos la instancia de express
 var app = express();
 
-var db = mongoskin.db('mongodb://localhost:1494/todo?auto_reconnect', {
+var db = mongoskin.db('mongodb://localhost:27017/todo?auto_reconnect', {
 	safe : true
 });
 
@@ -33,7 +35,7 @@ app.locals.appname = 'Express.js Todo App'
 app.set('port', process.env.PORT || 3000);
 
 //Configuramos el sistema de templates(jade)
-app.engine('html', consolidate.jade);
+app.engine('jade', jade.renderFile);
 app.set('views engine', 'jade');
 app.set('views', __dirname + '/views');
 
@@ -79,9 +81,11 @@ app.param('task_id', function (req, res, nex, taskId){
 
 //Rutas de otros archivos
 
+
 app.all('*', function (req, res){
-	res.send(404);
+	res.sendStatus(404);
 });
+
 
 http.createServer(app).listen(app.get('port'), function (){
 	console.log('Express server run in ' + app.get('port'));
