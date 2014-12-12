@@ -55,7 +55,7 @@ app.use(session({
 app.use(lessMiddleware(__dirname + 'public'));
 
 //Cargamos los archivos estaticos
-app.use(express.static(path.join(__dirname + 'public')));
+app.use(express.static(path.join(__dirname + '/public')));
 
 // app.use(function (req, res, next){
 // 	res.locals._csrf = req.session._csrf;
