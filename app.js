@@ -1,4 +1,7 @@
-var express =  require('express');
+var express =  require('express.io');
+var app = express();
+app.http().io();
+
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var routes = require('./routes');
@@ -16,7 +19,6 @@ var jade = require('jade');
 var mongoskin = require('mongoskin');
 
 //Creamos la instancia de express
-var app = express();
 
 var db = mongoskin.db('mongodb://localhost:27017/todo?auto_reconnect', {
 	safe : true
@@ -69,31 +71,32 @@ if('development' == app.get('env')){
 	app.use(errorhandler());
 }
 
-app.param('task_id', function (req, res, nex, taskId){
+app.param('task_id', function (req, res, next, taskId){
 	req.db.tasks.findById(taskId, function (err, task){
 		if(err) return next(err);
-		if (!task) return next(new Error('La tarea no existe'));
+		if(!task) return next(new Error('La tarea no existe'));
 
 		req.task = task;
 		return next();
 	});
 });
 
+
 //Rutas de otros archivos
 app.get('/', routes.index);
 app.get('/task', tasks.list);
-// app.post('/task', routes.markAllCompleted);
+app.post('/task', tasks.markAllCompleted);
 app.post('/task', tasks.add);
-// app.post('/', routes.markCompleted);
-// app.del('/task/:task_id', tasks.del);
-// app.get('/task/completed', tasks.completed);
+app.post('/task/:task_id', tasks.markCompleted);
+app.del('/task/:task_id', tasks.del);
+app.get('/task/completed', tasks.completed);
 
 
 app.all('*', function (req, res){
-	res.sendStatus(404);
+	res.status(404).send('Not Found');
 });
 
 
-http.createServer(app).listen(app.get('port'), function (){
+app.listen(app.get('port'), function (){
 	console.log('Express server run in ' + app.get('port'));
 });

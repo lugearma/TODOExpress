@@ -5,9 +5,8 @@ exports.list = function (req, res, next){
 	}).toArray(function (err, task){
 		if(err) return next(err);
 		if(!task) return next(new Error('La tarea no existe'));
-
 		//So todo sale bien las pintamos
-		debugger;
+		
 		res.render('tasks.jade', {
 			title : 'Todo list',
 			tasks : task || []
@@ -23,7 +22,8 @@ exports.add = function (req, res, next){
 	//Guardamos la tarea pero pueden surgir problemas
 	req.db.task.save({
 		name : req.body.name,
-		completed : false
+		completed : false,
+		correct : true
 	}, function (err, task) {
 		if(err) return next(err);
 		if(!task) return next(new Error('Fallo al guardar'));
@@ -60,6 +60,7 @@ exports.completed = function (req, res, next){
 };
 
 exports.markCompleted = function (req, res, next){
+	debugger;
 	if(!req.body.completed)
 		return next(new Error('Falta parametro'));
 	req.db.tasks.updateById(req.body._id, {
@@ -67,6 +68,7 @@ exports.markCompleted = function (req, res, next){
 	}, function (err, count) {
 		if(err) return next(err);
 		if(count !== 1)
+			debugger;
 			return next(new Error('Acabo algo mal :('));
 		console.info('Marco la tarea %s con id: %s como completada', 
 			req.task.name,
@@ -77,6 +79,7 @@ exports.markCompleted = function (req, res, next){
 
 
 exports.del = function (req, res, next){
+	debugger;
 	req.db.task.removeById(req.task._id, function (err, count){
 		if(err) return next(err);
 		if(count !== 1) return next(new Error('Acabo algo mas :('));
