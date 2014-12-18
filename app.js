@@ -72,7 +72,8 @@ if('development' == app.get('env')){
 }
 
 app.param('task_id', function (req, res, next, taskId){
-	req.db.tasks.findById(taskId, function (err, task){
+	debugger;
+	req.db.task.findById(taskId, function (err, task){
 		if(err) return next(err);
 		if(!task) return next(new Error('La tarea no existe'));
 

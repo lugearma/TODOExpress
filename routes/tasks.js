@@ -82,7 +82,7 @@ exports.del = function (req, res, next){
 	debugger;
 	req.db.task.removeById(req.task._id, function (err, count){
 		if(err) return next(err);
-		if(count !== 1) return next(new Error('Acabo algo mas :('));
+		if(count !== 1) return next(new Error('Acabo algo mal :('));
 		console.info('Borraste la tarea %s con el id: %s',
 			req.task.name,
 			req.task._id);

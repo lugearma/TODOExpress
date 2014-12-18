@@ -4,13 +4,13 @@ extends layout
 block content
 	if(task)
 		div(class="alert alert-success" role="alert") Se guardo correctamente :)
+
 	ul
 		each task in tasks
 			li= task.name
 				form(action='/task/#{task._id}', method='POST')
 					button(type="button" class="btn btn-success btn-xs") Hecha
-					a(type="button" class="btn btn-danger btn-xs task-delete", data-task-id=task._id.toString()) Eliminar
-					h5= task._id
+					a(type="button" class="btn btn-danger btn-xs task-delete", data-task-id="#{task._id}") Eliminar
 
 
 	//- .list
