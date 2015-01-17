@@ -2,20 +2,9 @@ extends layout
 
 block content
 
-	.menu
-		h2 menu
-		ul.nav.nav-pills
-			li
-				a(href='/') Home
-			li.active
-				a(href='/task')	Todo list
-			li
-				a(href='/task/completed') Completada
-	h1= title
-
 	.list
 		if(tasks.length === 0 )
-			| No hay tareas
+			| No hay tareas completadas
 		each task, index in tasks
 			.item
 				div.num

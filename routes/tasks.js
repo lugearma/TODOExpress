@@ -8,7 +8,7 @@ exports.list = function (req, res, next){
 		//So todo sale bien las pintamos
 		
 		res.render('tasks.jade', {
-			title : 'Todo list',
+			title : 'Todas las tareas',
 			tasks : task || []
 		});
 	});
@@ -52,8 +52,8 @@ exports.completed = function (req, res, next){
 	req.db.task.find({
 		completed : true
 	}).toArray(function (err, tasks){
-		res.render('task_completed', {
-			title : 'Completado',
+		res.render('tasks_completed.jade', {
+			title : 'Completadas',
 			tasks : tasks || []
 		});
 	});
@@ -61,25 +61,25 @@ exports.completed = function (req, res, next){
 
 exports.markCompleted = function (req, res, next){
 	debugger;
-	if(!req.body.completed)
-		return next(new Error('Falta parametro'));
-	req.db.tasks.updateById(req.body._id, {
-		$set : {completed : req.body.completed === 'true'}
-	}, function (err, count) {
-		if(err) return next(err);
-		if(count !== 1)
+	if(!req.task.completed)
+		// return next(new Error('Falta parametro'));
+		req.db.task.updateById(req.task._id, {
+			$set : {completed : req.task.completed === true}
+		}, function (err, count) {
 			debugger;
-			return next(new Error('Acabo algo mal :('));
-		console.info('Marco la tarea %s con id: %s como completada', 
-			req.task.name,
-			req.task._id);
-		res.redirect('/task');
-	});
+			if(err) return next(err);
+			if(count !== 1)
+				return next(new Error('Acabo algo mal :('));
+			console.info('Marco la tarea %s con id: %s como completada', 
+				req.task.name,
+				req.task._id);
+			res.redirect('/task');
+		});
 };
 
 
 exports.del = function (req, res, next){
-	debugger;
+	
 	req.db.task.removeById(req.task._id, function (err, count){
 		if(err) return next(err);
 		if(count !== 1) return next(new Error('Acabo algo mal :('));

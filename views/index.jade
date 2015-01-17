@@ -4,18 +4,13 @@ block content
 	.menu
 		h2 Menu
 		ul.nav.nav-pills
-			li.active
-				a(href='/task') Home
 			li
-				a(href='/task') Todo List
+				a(href='/task') Lista de tareas
 			li
-				a(href='/task') Completed
+				a(href='/completed') Completadas
 	.home
 		form(action='/task', method='POST')
+			label Ingresa una nueva tarea:
+			br
 			input(type='text', name='name', palceholder='Nueva tarea')
 			button Enviar
-		
-
-				
-
-

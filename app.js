@@ -32,12 +32,12 @@ app.use(function (req, res, next){
 });
 
 //Pasamo esta variable para que todos los templates la puedan untilizar(es como decir que es global)
-app.locals.appname = 'Express.js Todo App'
+app.locals.appname = 'Ordename.la'
 
 app.set('port', process.env.PORT || 3000);
 
 //Configuramos el sistema de templates(jade)
-app.engine('jade', jade.renderFile);
+// app.engine('jade', jade.renderFile);
 app.set('views engine', 'jade');
 app.set('views', __dirname + '/views');
 
@@ -72,7 +72,6 @@ if('development' == app.get('env')){
 }
 
 app.param('task_id', function (req, res, next, taskId){
-	debugger;
 	req.db.task.findById(taskId, function (err, task){
 		if(err) return next(err);
 		if(!task) return next(new Error('La tarea no existe'));
@@ -90,7 +89,7 @@ app.post('/task', tasks.markAllCompleted);
 app.post('/task', tasks.add);
 app.post('/task/:task_id', tasks.markCompleted);
 app.del('/task/:task_id', tasks.del);
-app.get('/task/completed', tasks.completed);
+app.get('/completed', tasks.completed);
 
 
 app.all('*', function (req, res){
