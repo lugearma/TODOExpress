@@ -50,7 +50,7 @@ exports.markAllCompleted = function (req, res, next){
 
 exports.completed = function (req, res, next){
 	req.db.task.find({
-		completed : true
+		completed : "true"
 	}).toArray(function (err, tasks){
 		res.render('tasks_completed.jade', {
 			title : 'Completadas',
