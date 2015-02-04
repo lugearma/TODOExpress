@@ -16,8 +16,10 @@ exports.list = function (req, res, next){
 
 exports.add = function (req, res, next){
 	//Si no se introdujo nada
-	if(!req.body || !req.body.name)
+	if(!req.body || !req.body.name){
+		res.render('error.jade', { mensaje : 'Hola no mandaste nada, no mientas' });
 		return next(new Error('No hay datos'));
+	}
 
 	//Guardamos la tarea pero pueden surgir problemas
 	req.db.task.save({
@@ -60,13 +62,12 @@ exports.completed = function (req, res, next){
 };
 
 exports.markCompleted = function (req, res, next){
-	debugger;
+	
 	if(!req.task.completed)
-		// return next(new Error('Falta parametro'));
 		req.db.task.updateById(req.task._id, {
-			$set : {completed : req.task.completed === true}
+			$set : {completed : "true"}
 		}, function (err, count) {
-			debugger;
+			// debugger;
 			if(err) return next(err);
 			if(count !== 1)
 				return next(new Error('Acabo algo mal :('));
